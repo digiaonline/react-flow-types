@@ -51,7 +51,7 @@ export default function Layout({header, footer}: {header: ReactChildren, footer:
   </div>
 ```
 
-## `Component<Props>`
+### `Component<Props>`
 
 Matches any component, whether functional or class-based.
 
@@ -74,7 +74,7 @@ makeElement(TheComponent)
 makeElement(AnotherComponent)
 ```
 
-## `HOC<RequiredProps, ProvidedProps>`
+### `HOC<RequiredProps, ProvidedProps>`
 
 The generic type of a higher-order component. A `HOC` always *provides* a set of props to the inner component, and *requires* another set of props to be passed to it.
 
@@ -131,7 +131,7 @@ export default function Layout({header, footer}: {header: Element<any>, footer: 
   </div>
 ```
 
-## `FunctionalComponent<Props>`
+### `FunctionalComponent<Props>`
 
 Matches a functional react component.
 
@@ -148,7 +148,7 @@ const makeElement = (component: FunctionalComponent<{n: number}>) =>
 makeElement(TheComponent)
 ```
 
-## `ClassComponent<DefaultProps, Props, State>`
+### `ClassComponent<DefaultProps, Props, State>`
 
 An alias for `Class<React$Component<DefaultProps, Props, State>>`, and matches any ES6 class-based react componnet.
 
