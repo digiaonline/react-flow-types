@@ -23,6 +23,6 @@ export type Component<Props> = FunctionalComponent<Props> | ClassComponent<any, 
  * RequiredProps: The final wrapped component will need RequiredProps, in addition to its own props
  * ProvidedProps: The final wrapped component will not need ProvidedProps, because the HOC will provide them to the inner component
  */
-export type HOC<RequiredProps, ProvidedProps> =
+export type HigherOrderComponent<RequiredProps, ProvidedProps> =
   (<OriginalProps>(component: FunctionalComponent<OriginalProps>) => FunctionalComponent<RequiredProps & $Diff<OriginalProps, ProvidedProps>>) &
   (<OriginalProps, DefaultProps>(component: ClassComponent<DefaultProps, OriginalProps, any>) => FunctionalComponent<$Diff<RequiredProps & $Diff<OriginalProps, ProvidedProps>, DefaultProps>>);
