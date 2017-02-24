@@ -3,17 +3,17 @@ import React from 'react';
 import type {
   FunctionalComponent,
   ClassComponent,
-  HOC,
+  HigherOrderComponent,
   Component,
   Element,
   AnyReactElement,
   ReactChildren,
 } from '../index';
 
-// This is a valid functional react component that we'll use to test our HOCs later
+// This is a valid functional react component that we'll use to test our HigherOrderComponents later
 const ValidFunctionalComponent = (props: {string1: string, number1: number}) => <div />;
 
-// This is an invalid functional component. HOCs shouldn't accept this as input
+// This is an invalid functional component. HigherOrderComponents shouldn't accept this as input
 const InvalidFunctionalComponent = (props: {string1: string, number1: number}) => 'hi';
 
 // Let's test them both:
@@ -40,7 +40,7 @@ const InvalidFunctionalComponent = (props: {string1: string, number1: number}) =
   // (function(a: FunctionalComponent<any>){})(InvalidFunctionalComponent);
 })();
 
-// This is a valid class-based component. We'll use it to test HOCs later
+// This is a valid class-based component. We'll use it to test HigherOrderComponents later
 class ValidClassComponent extends React.Component<{number1: number}, {string1: string, number1: number}, void> {
   static defaultProps = {number1: 10}
 
@@ -115,10 +115,10 @@ class ValidClassComponent extends React.Component<{number1: number}, {string1: s
   (({}): ReactChildren);
 })();
 
-// Now, the tests for HOC:
+// Now, the tests for HigherOrderComponent:
 (function() {
   // Let's start with only the ProvidedProps part:
-  declare var provideString1: HOC<{}, {string1: string}>;
+  declare var provideString1: HigherOrderComponent<{}, {string1: string}>;
 
   (function(){
     // ... and test it with our functional component:
@@ -137,7 +137,7 @@ class ValidClassComponent extends React.Component<{number1: number}, {string1: s
   })();
 
   // now both ProvidedProps and RequiredProps:
-  declare var provideString1AndRequireObject1: HOC<{object1: Object}, {string1: string}>;
+  declare var provideString1AndRequireObject1: HigherOrderComponent<{object1: Object}, {string1: string}>;
 
   (function(){
     // with the functional component:
