@@ -1,15 +1,17 @@
-# react-types
+# react-flow-types
+
+[![Build Status](https://secure.travis-ci.org/nordsoftware/react-flow-types.svg?branch=master)](https://travis-ci.org/nordsoftware/react-flow-types)
 
 A small collection of flow type definitions for working with React components.
 
 ## Usage
 
 ```
-$ npm install --save-dev @nordsoftware/react-types
+$ npm install --save-dev react-flow-types
 ```
 
 ```javascript
-import type {ReactChildren} from '@nordsoftware/react-types'
+import type {ReactChildren} from 'react-flow-types'
 
 export default function MyComponent({children}: {children?: ReactChildren}) =>
   <div>{chlidren}</div>
@@ -24,7 +26,7 @@ Useful any react element or `void`. Useful when a value should be an optional si
 Example:
 
 ```javascript
-import type {AnyReactElement} from '@nordsoftware/react-types'
+import type {AnyReactElement} from 'react-flow-types'
 
 // `header` and `footer` in this example are optional
 export default function Layout({header, footer}: {header: AnyReactElement, footer: AnyReactElement}) =>
@@ -41,7 +43,7 @@ Matches a single `AnyReactElement`, or an arary of them, or a string, or a numbe
 Example:
 
 ```javascript
-import type {ReactChildren} from '@nordsoftware/react-types'
+import type {ReactChildren} from 'react-flow-types'
 
 // `header` and `footer` in this example can be multiple elements, and even strings or numbers
 export default function Layout({header, footer}: {header: ReactChildren, footer: ReactChildren}) =>
@@ -56,7 +58,7 @@ export default function Layout({header, footer}: {header: ReactChildren, footer:
 Matches any component, whether functional or class-based.
 
 ```javascript
-import type {Component} from '@nordsoftware/react-types'
+import type {Component} from 'react-flow-types'
 
 class TheComponent extends React.Component {
   props: {n: number}
@@ -81,7 +83,7 @@ The generic type of a higher-order component. A `HOC` always *provides* a set of
 Example:
 
 ```javascript
-import type {HOC} from '@nordsoftware/react-types'
+import type {HOC} from 'react-flow-types'
 
 type RequiredProps = {
   name: string,
@@ -122,7 +124,7 @@ Matches a valid instance of a react component, also called an element. It's a al
 Example:
 
 ```javascript
-import type {Element} from '@nordsoftware/react-types'
+import type {Element} from 'react-flow-types'
 
 export default function Layout({header, footer}: {header: Element<any>, footer: Element<any>}) =>
   <div>
@@ -138,7 +140,7 @@ Matches a functional react component.
 Example:
 
 ```javascript
-import type {FunctionalComponent} from '@nordsoftware/react-types'
+import type {FunctionalComponent} from 'react-flow-types'
 
 const TheComponent = () => <div />
 
@@ -155,7 +157,7 @@ An alias for `Class<React$Component<DefaultProps, Props, State>>`, and matches a
 Example:
 
 ```javascript
-import type {ClassComponent} from '@nordsoftware/react-types'
+import type {ClassComponent} from 'react-flow-types'
 
 class TheComponent extends React.Component {
   props: {n: number}
