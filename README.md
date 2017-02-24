@@ -1,6 +1,13 @@
 # react-flow-types
 
-[![Build Status](https://secure.travis-ci.org/nordsoftware/react-flow-types.svg?branch=master)](https://travis-ci.org/nordsoftware/react-flow-types)
+[![Build Status](https://secure.travis-ci.org/nordsoftware/react-flow-types.svg?branch=develop)](https://travis-ci.org/nordsoftware/react-flow-types)
+[![Code Climate](https://codeclimate.com/github/nordsoftware/react-flow-types/badges/gpa.svg)](https://codeclimate.com/github/nordsoftware/react-flow-types)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nordsoftware/react-flow-types/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nordsoftware/react-flow-types/?branch=master)
+[![StyleCI](https://styleci.io/repos/82946072/shield?style=flat)](https://styleci.io/repos/82946072)
+[![npm version](https://img.shields.io/npm/v/react-flow-types.svg)](https://www.npmjs.com/package/react-flow-types)
+[![npm downloads](https://img.shields.io/npm/dt/react-flow-types.svg)](https://www.npmjs.com/package/react-flow-types)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/nordsoftware/react-flow-types/master/LICENSE)
+[![Gitter](https://img.shields.io/gitter/room/norsoftware/open-source.svg?maxAge=2592000)](https://gitter.im/nordsoftware/open-source)
 
 A small collection of flow type definitions for working with React components.
 
