@@ -76,14 +76,14 @@ makeElement(TheComponent)
 makeElement(AnotherComponent)
 ```
 
-### `HOC<RequiredProps, ProvidedProps>`
+### `HigherOrderComponent<RequiredProps, ProvidedProps>`
 
-The generic type of a higher-order component. A `HOC` always *provides* a set of props to the inner component, and *requires* another set of props to be passed to it.
+The generic type of a higher-order component. A `HigherOrderComponent` always *provides* a set of props to the inner component, and *requires* another set of props to be passed to it.
 
 Example:
 
 ```javascript
-import type {HOC} from 'react-flow-types'
+import type {HigherOrderComponent} from 'react-flow-types'
 
 type RequiredProps = {
   name: string,
@@ -97,7 +97,7 @@ type ProvidedProps = {
 }
 
 // The hoc:
-const asField = (): HOC<{name: string}, ProvidedProps> => (component): any => {
+const asField = (): HigherOrderComponent<{name: string}, ProvidedProps> => (component): any => {
   const FinalComponent = ({name, ...rest}) =>
     <ReduxFormField name={name} component={component} props={rest} />;
 
