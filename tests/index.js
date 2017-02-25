@@ -160,4 +160,19 @@ class ValidClassComponent extends React.Component<{number1: number}, {string1: s
     // $FlowExpectError
     <ProvideString1AndRequireObject1OfValidClassComponent number1={10} />;
   })();
+
+  // Composition:
+  (function(){
+    declare var provideNumber1AndRequireNumber2: HigherOrderComponent<{number2: number}, {}>;
+    declare var requireNumber3: HigherOrderComponent<{number3: number}, {}>;
+    const ComposedComponent = provideString1(provideNumber1AndRequireNumber2(requireNumber3(ValidFunctionalComponent)));
+
+    <ComposedComponent number1={1} number2={1} number3={1} />;
+    // $FlowExpectError
+    <ComposedComponent number2={1} number3={1} />;
+    // $FlowExpectError
+    <ComposedComponent number1={1} number3={1} />;
+    // $FlowExpectError
+    <ComposedComponent number1={1} number2={1} />;
+  })();
 })();
