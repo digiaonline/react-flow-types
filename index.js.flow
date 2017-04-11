@@ -16,7 +16,7 @@ export type Component<Props> = FunctionalComponent<Props> | ClassComponent<any, 
 
 /**
  * now that our base types are correct, we can define a generic type for a
- * hihger-order component.
+ * higher-order component.
  *
  * It takes two type parameters: RequiredProps and ProvidedProps
  *
