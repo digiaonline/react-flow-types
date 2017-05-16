@@ -104,7 +104,7 @@ type ProvidedProps = {
 }
 
 // The hoc:
-const asField = (): HigherOrderComponent<{name: string}, ProvidedProps> => (component): any => {
+const asField = (): HigherOrderComponent<RequiredProps, ProvidedProps> => (component): any => {
   const FinalComponent = ({name, ...rest}) =>
     <ReduxFormField name={name} component={component} props={rest} />;
 
