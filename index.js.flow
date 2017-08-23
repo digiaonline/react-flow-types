@@ -1,28 +1,24 @@
 // @flow
+import * as React from 'react';
 
-export type Element<Config> = React$Element<Config>;
+export type ClassComponent<Props, State> =
+  Class<React.Component<Props, State>>;
 
-export type AnyReactElement = ?Element<any>;
-export type ReactChildren = AnyReactElement | Array<AnyReactElement> | string | number;
+export type ClassComponentWithDefaultProps<DefaultProps: {}, Props: {}, State> =
+  ClassComponent<Props, State> & {defaultProps: DefaultProps};
 
-// This is the type of a functional component
-export type FunctionalComponent<Props> = (props: Props) => ?Element<any>;
-
-// This is the type of an ES6 class-based component
-export type ClassComponent<DefaultProps, Props, State> = Class<React$Component<DefaultProps, Props, State>>;
-
-// Accepts both component types
-export type Component<Props> = FunctionalComponent<Props> | ClassComponent<any, Props, any>;
+export type ComponentWithDefaultProps<DefaultProps: {}, Props: {}> =
+  React.ComponentType<Props> & {defaultProps: DefaultProps};
 
 /**
- * now that our base types are correct, we can define a generic type for a
- * hihger-order component.
+ * Here is a generic type for HOCs:
  *
  * It takes two type parameters: RequiredProps and ProvidedProps
  *
  * RequiredProps: The final wrapped component will need RequiredProps, in addition to its own props
  * ProvidedProps: The final wrapped component will not need ProvidedProps, because the HOC will provide them to the inner component
  */
-export type HigherOrderComponent<RequiredProps, ProvidedProps> =
-  (<OriginalProps>(component: FunctionalComponent<OriginalProps>) => FunctionalComponent<RequiredProps & $Diff<OriginalProps, ProvidedProps>>) &
-  (<OriginalProps, DefaultProps>(component: ClassComponent<DefaultProps, OriginalProps, any>) => FunctionalComponent<$Diff<RequiredProps & $Diff<OriginalProps, ProvidedProps>, DefaultProps>>);
+export type HigherOrderComponent<RequiredProps: {}, ProvidedProps: {}> =
+  & (<OriginalProps, DefaultProps>(component: ComponentWithDefaultProps<DefaultProps, OriginalProps>) =>
+      React.ComponentType<RequiredProps & $Diff<$Diff<OriginalProps, ProvidedProps>, DefaultProps>>)
+  & (<OriginalProps>(component: React.ComponentType<OriginalProps>) => React.ComponentType<RequiredProps & $Diff<OriginalProps, ProvidedProps>>);

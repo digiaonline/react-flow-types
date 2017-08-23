@@ -1,13 +1,8 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import type {
-  FunctionalComponent,
-  ClassComponent,
   HigherOrderComponent,
-  Component,
-  Element,
-  AnyReactElement,
-  ReactChildren,
+  ClassComponentWithDefaultProps,
 } from '../index';
 
 // This is a valid functional react component that we'll use to test our HigherOrderComponents later
@@ -16,32 +11,8 @@ const ValidFunctionalComponent = (props: {string1: string, number1: number}) => 
 // This is an invalid functional component. HigherOrderComponents shouldn't accept this as input
 const InvalidFunctionalComponent = (props: {string1: string, number1: number}) => 'hi';
 
-// Let's test them both:
-(function(){
-  // This should pass:
-  <ValidFunctionalComponent string1="string" number1={10} />;
-
-  // $FlowExpectError
-  <ValidFunctionalComponent string1="string" number1="string" />;
-
-  // $FlowExpectError
-  <InvalidFunctionalComponent string1="string" number1={10} />;
-})();
-
-// Now we can test FunctionalComponent:
-(function(){
-  // If FunctionalComponent is correctly defined, then this should pass:
-  (function<Props>(a: FunctionalComponent<Props>){})(ValidFunctionalComponent);
-
-  // ... and so should this:
-  (function(a: FunctionalComponent<{string1: string, number1: number}>){})(ValidFunctionalComponent);
-
-  // ... but this should fail: (commenting out, because error shows up in the wrong locaiton. That's a bug with flow)
-  // (function(a: FunctionalComponent<any>){})(InvalidFunctionalComponent);
-})();
-
 // This is a valid class-based component. We'll use it to test HigherOrderComponents later
-class ValidClassComponent extends React.Component<{number1: number}, {string1: string, number1: number}, void> {
+class ValidClassComponent extends React.Component<{string1: string, number1: number}, void> {
   static defaultProps = {number1: 10}
 
   render() {
@@ -49,70 +20,21 @@ class ValidClassComponent extends React.Component<{number1: number}, {string1: s
   }
 };
 
-// Let's test it:
+// tests for ClassComponentWithDefaultProps
 (function(){
-  // This should pass:
-  <ValidClassComponent string1="string" />;
+  // should pass
+  (ValidClassComponent: ClassComponentWithDefaultProps<{number1: number}, {string1: string, number1: number}, void>);
 
   // $FlowExpectError
-  <ValidClassComponent strig1={10} />;
-})();
-
-// Now we can test ClassComponent
-(function(){
-  // This should pass:
-  (function(a: ClassComponent<any, {string1: string, number1: number}, any>){})(ValidClassComponent);
+  (ValidClassComponent: ClassComponentWithDefaultProps<{number1: string}, {string1: string, number1: number}, void>);
 
   // $FlowExpectError
-  (function(a: ClassComponent<any, {string1: string, number1: string}, any>){})(ValidClassComponent);
+  (ValidClassComponent: ClassComponentWithDefaultProps<{}, {string1: string, number1: number}, void>);
 
   // $FlowExpectError
-  (function(a: ClassComponent<any, {string1: string, number1: string}, any>){})(ValidFunctionalComponent);
-})();
+  (ValidClassComponent: ClassComponentWithDefaultProps<{number1: number}, {number1: number}, void>);
 
-// Tests for Component:
-(function(){
-  // Should pass:
-  (function(a: Component<{string1: string, number1: number}>){})(ValidClassComponent);
-  (function(a: Component<{string1: string, number1: number}>){})(ValidFunctionalComponent);
-
-  // Should fail: $FlowExpectError
-  (function(a: Component<{string1: string}>){})(ValidFunctionalComponent);
-
-  // $FlowExpectError
-  (function(a: Component<{string1: string}>){})(ValidClassComponent);
-})();
-
-// Tests for Element:
-(function(){
-  (<div />: Element<any>);
-  (<ValidFunctionalComponent string1="string" number1={10} />: Element<any>);
-})();
-
-// Tests for AnyReactElement
-(function(){
-  ((<div />): AnyReactElement);
-  ((null): AnyReactElement);
-  // $FlowExpectError
-  (('string'): AnyReactElement);
-})();
-
-// Tests for ReactChildren
-(function(){
-  ((<div />): ReactChildren);
-  (([<div />]): ReactChildren);
-
-  ((null): ReactChildren);
-  (([null]): ReactChildren);
-
-  (('string'): ReactChildren);
-  // $FlowExpectError
-  ((['string']): ReactChildren);
-
-  ((10): ReactChildren);
-
-  // $FlowExpectError
-  (({}): ReactChildren);
+  (class extends React.PureComponent<{b: string}, {c: string}> {static defaultProps = {a: 'foo'}} :ClassComponentWithDefaultProps<{a: string}, {b: string}, {c: string}>)
 })();
 
 // Now, the tests for HigherOrderComponent:
@@ -125,7 +47,7 @@ class ValidClassComponent extends React.Component<{number1: number}, {string1: s
     const ProvideString1OfValidFunctionalComponent = provideString1(ValidFunctionalComponent);
 
     // should pass:
-    (<ProvideString1OfValidFunctionalComponent number1={10} />: Element<any>);
+    (<ProvideString1OfValidFunctionalComponent number1={10} />: React.Element<any>);
   })();
 
   (function(){
@@ -133,7 +55,10 @@ class ValidClassComponent extends React.Component<{number1: number}, {string1: s
     const ProvideString1OfValidClassComponent = provideString1(ValidClassComponent);
 
     // should pass:
-    (<ProvideString1OfValidClassComponent />: Element<any>);
+    (<ProvideString1OfValidClassComponent />: React.Element<any>);
+
+    // $FlowExpectError
+    (<ProvideString1OfValidClassComponent number1="foo" />: React.Element<any>);
   })();
 
   // now both ProvidedProps and RequiredProps:
@@ -158,18 +83,19 @@ class ValidClassComponent extends React.Component<{number1: number}, {string1: s
     <ProvideString1AndRequireObject1OfValidClassComponent object1={{}} />;
 
     // $FlowExpectError
-    <ProvideString1AndRequireObject1OfValidClassComponent number1={10} />;
+    <ProvideString1AndRequireObject1OfValidClassComponent />;
   })();
 
   // Composition:
   (function(){
-    declare var provideNumber1AndRequireNumber2: HigherOrderComponent<{number2: number}, {}>;
+    declare var provideNumber1AndRequireNumber2: HigherOrderComponent<{number2: number}, {number1: number}>;
     declare var requireNumber3: HigherOrderComponent<{number3: number}, {}>;
     const ComposedComponent = provideString1(provideNumber1AndRequireNumber2(requireNumber3(ValidFunctionalComponent)));
 
-    <ComposedComponent number1={1} number2={1} number3={1} />;
-    // $FlowExpectError
     <ComposedComponent number2={1} number3={1} />;
+
+    // $FlowExpectError
+    <ComposedComponent number2={1} number3={1} number1="hi" />;
     // $FlowExpectError
     <ComposedComponent number1={1} number3={1} />;
     // $FlowExpectError
@@ -198,11 +124,37 @@ class ValidClassComponent extends React.Component<{number1: number}, {string1: s
       )(ValidFunctionalComponent);
 
       <ComposedComponent2 number1={1} number2={1} number3={1} />;
-      // $FlowExpectError
+
       <ComposedComponent2 number2={1} number3={1} />;
+
       // $FlowExpectError
       <ComposedComponent2 number1={1} number3={1} />;
       // $FlowExpectError
       <ComposedComponent2 number1={1} number2={1} />;
   })();
 })();
+
+
+type Props = {
+  foo: number,
+  bar: number,
+  baz: number,
+};
+
+class TestComponent extends React.Component<Props, void> {
+  static defaultProps = {
+    foo: 3,
+    bar: 3,
+  };
+  render = () => null;
+};
+
+const injectFoo: HigherOrderComponent<{}, {foo: number}> = (C: any): any => {
+  return (props: Props) => <C {...props} foo={3} />;
+};
+const Injected = injectFoo(TestComponent);
+
+<Injected baz={10} />;
+
+// $FlowExpectError
+<Injected foo="asdf" bar={3} baz={10} />;
