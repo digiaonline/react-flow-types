@@ -19,6 +19,6 @@ export type ComponentWithDefaultProps<DefaultProps: {}, Props: {}> =
  * ProvidedProps: The final wrapped component will not need ProvidedProps, because the HOC will provide them to the inner component
  */
 export type HigherOrderComponent<RequiredProps: {}, ProvidedProps: {}> =
-  & (<OriginalProps, DefaultProps>(component: ComponentWithDefaultProps<DefaultProps, OriginalProps>) =>
+  & (<OriginalProps: {}, DefaultProps: {}>(component: ComponentWithDefaultProps<DefaultProps, OriginalProps>) =>
       React.ComponentType<RequiredProps & $Diff<$Diff<OriginalProps, ProvidedProps>, DefaultProps>>)
-  & (<OriginalProps>(component: React.ComponentType<OriginalProps>) => React.ComponentType<RequiredProps & $Diff<OriginalProps, ProvidedProps>>);
+  & (<OriginalProps: {}>(component: React.ComponentType<OriginalProps>) => React.ComponentType<RequiredProps & $Diff<OriginalProps, ProvidedProps>>);
