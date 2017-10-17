@@ -20,6 +20,5 @@ export type ComponentWithDefaultProps<DefaultProps, Props> =
  */
 export type HigherOrderComponent<RequiredProps, ProvidedProps> =
   & (<OriginalProps, DefaultProps>(component: ComponentWithDefaultProps<DefaultProps, OriginalProps>) =>
-      // React.ComponentType<RequiredProps & $Diff<$Diff<OriginalProps, ProvidedProps>, DefaultProps>>)
       React.ComponentType<RequiredProps & $Diff<OriginalProps, ProvidedProps & DefaultProps>>)
   & (<OriginalProps>(component: React.ComponentType<OriginalProps>) => React.ComponentType<RequiredProps & $Diff<OriginalProps, ProvidedProps>>);
