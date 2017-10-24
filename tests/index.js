@@ -12,6 +12,7 @@ import injectFooOriginal from './fixtures/injectFooOriginal';
 import injectFooOriginalPropsFixed from './fixtures/injectFooOriginalPropsFixed';
 import injectFooReadme from './fixtures/injectFooReadme';
 import injectFooViaClassComponent from './fixtures/injectFooViaClassComponent';
+import injectFooViaClassComponentWithOptions from './fixtures/injectFooViaClassComponentWithOptions';
 
 // tests for ClassComponentWithDefaultProps
 (function(){
@@ -150,4 +151,10 @@ const InjectedViaClassComponent = injectFooViaClassComponent(TestComponent);
 <InjectedViaClassComponent baz={10} />;
 // $FlowExpectError
 <InjectedViaClassComponent foo="asdf" bar={3} baz={10} />;
+
+
+const InjectedViaClassComponentWithOptions = injectFooViaClassComponentWithOptions({foo: 'bar'})(TestComponent);
+<InjectedViaClassComponentWithOptions baz={10} />;
+// $FlowExpectError
+<InjectedViaClassComponentWithOptions foo="asdf" bar={3} baz={10} />;
 
