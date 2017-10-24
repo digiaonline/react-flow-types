@@ -4,21 +4,13 @@ import type {
   HigherOrderComponent,
   ClassComponentWithDefaultProps,
 } from '../index';
-
-// This is a valid functional react component that we'll use to test our HigherOrderComponents later
-const ValidFunctionalComponent = (props: {string1: string, number1: number}) => <div />;
-
-// This is an invalid functional component. HigherOrderComponents shouldn't accept this as input
-const InvalidFunctionalComponent = (props: {string1: string, number1: number}) => 'hi';
-
-// This is a valid class-based component. We'll use it to test HigherOrderComponents later
-class ValidClassComponent extends React.Component<{string1: string, number1: number}, void> {
-  static defaultProps = {number1: 10}
-
-  render() {
-    return <div />;
-  }
-};
+import InvalidFunctionalComponent from './fixtures/InvalidFunctionalComponent';
+import ValidClassComponent from './fixtures/ValidClassComponent';
+import ValidFunctionalComponent from './fixtures/ValidFunctionalComponent';
+import TestComponent from './fixtures/TestComponent';
+import injectFooOriginal from './fixtures/injectFooOriginal';
+import injectFooOriginalPropsFixed from './fixtures/injectFooOriginalPropsFixed';
+import injectFooReadme from './fixtures/injectFooReadme';
 
 // tests for ClassComponentWithDefaultProps
 (function(){
@@ -135,26 +127,19 @@ class ValidClassComponent extends React.Component<{string1: string, number1: num
 })();
 
 
-type Props = {
-  foo: number,
-  bar: number,
-  baz: number,
-};
-
-class TestComponent extends React.Component<Props, void> {
-  static defaultProps = {
-    foo: 3,
-    bar: 3,
-  };
-  render = () => null;
-};
-
-const injectFoo: HigherOrderComponent<{}, {foo: number}> = (C: any): any => {
-  return (props: Props) => <C {...props} foo={3} />;
-};
-const Injected = injectFoo(TestComponent);
-
-<Injected baz={10} />;
-
+const InjectedOriginal = injectFooOriginal(TestComponent);
+<InjectedOriginal baz={10} />;
 // $FlowExpectError
-<Injected foo="asdf" bar={3} baz={10} />;
+<InjectedOriginal foo="asdf" bar={3} baz={10} />;
+
+
+const InjectedOriginalPropsFixed = injectFooOriginalPropsFixed(TestComponent);
+<InjectedOriginalPropsFixed baz={10} />;
+// $FlowExpectError
+<InjectedOriginalPropsFixed foo="asdf" bar={3} baz={10} />;
+
+
+const InjectedReadme = injectFooReadme(TestComponent);
+<InjectedReadme baz={10} />;
+// $FlowExpectError
+<InjectedReadme foo="asdf" bar={3} baz={10} />;
