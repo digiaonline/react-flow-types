@@ -8,10 +8,12 @@ import InvalidFunctionalComponent from './fixtures/InvalidFunctionalComponent';
 import ValidClassComponent from './fixtures/ValidClassComponent';
 import ValidFunctionalComponent from './fixtures/ValidFunctionalComponent';
 import TestClassComponent from './fixtures/TestClassComponent';
+import TestFunctionalComponent from './fixtures/TestFunctionalComponent';
 import injectFooFactoryFunctionalComponent from './fixtures/injectFooFactoryFunctionalComponent';
 import injectFooHocFunctionalComponent from './fixtures/injectFooHocFunctionalComponent';
 import injectFooFactoryClassComponent from './fixtures/injectFooFactoryClassComponent';
 import injectFooHocClassComponent from './fixtures/injectFooHocClassComponent';
+
 
 // tests for ClassComponentWithDefaultProps
 (function(){
@@ -128,26 +130,53 @@ import injectFooHocClassComponent from './fixtures/injectFooHocClassComponent';
 })();
 
 
-const InjectedFooFactoryFunctionalComponent = injectFooFactoryFunctionalComponent(TestClassComponent);
-<InjectedFooFactoryFunctionalComponent baz={10} />;
+// -----------------------------------
+// target: TestClassComponent
+const InjectedFooClassFactoryFunctionalComponent = injectFooFactoryFunctionalComponent(TestClassComponent);
+<InjectedFooClassFactoryFunctionalComponent baz={10} />;
 // $FlowExpectError
-<InjectedFooFactoryFunctionalComponent foo="asdf" bar={3} baz={10} />;
+<InjectedFooClassFactoryFunctionalComponent foo="asdf" bar={3} baz={10} />;
 
 
-const InjectedFooHocFunctional = injectFooHocFunctionalComponent()(TestClassComponent);
-<InjectedFooHocFunctional baz={10} />;
+const InjectedFooClassHocFunctional = injectFooHocFunctionalComponent()(TestClassComponent);
+<InjectedFooClassHocFunctional baz={10} />;
 // $FlowExpectError
-<InjectedFooHocFunctional foo="asdf" bar={3} baz={10} />;
+<InjectedFooClassHocFunctional foo="asdf" bar={3} baz={10} />;
 
 
-const InjectedFooFactoryClassComponent = injectFooFactoryClassComponent(TestClassComponent);
-<InjectedFooFactoryClassComponent baz={10} />;
+const InjectedFooClassFactoryClassComponent = injectFooFactoryClassComponent(TestClassComponent);
+<InjectedFooClassFactoryClassComponent baz={10} />;
 // $FlowExpectError
-<InjectedFooFactoryClassComponent foo="asdf" bar={3} baz={10} />;
+<InjectedFooClassFactoryClassComponent foo="asdf" bar={3} baz={10} />;
 
 
-const InjectedFooHocClassComponent = injectFooHocClassComponent({foo: 'bar'})(TestClassComponent);
-<InjectedFooHocClassComponent baz={10} />;
+const InjectedFooClassHocClassComponent = injectFooHocClassComponent({foo: 'bar'})(TestClassComponent);
+<InjectedFooClassHocClassComponent baz={10} />;
 // $FlowExpectError
-<InjectedFooHocClassComponent foo="asdf" bar={3} baz={10} />;
+<InjectedFooClassHocClassComponent foo="asdf" bar={3} baz={10} />;
 
+
+// -----------------------------------
+// target: TestFunctionalComponent
+const InjectedFooFunctionFactoryFunctionalComponent = injectFooFactoryFunctionalComponent(TestFunctionalComponent);
+<InjectedFooFunctionFactoryFunctionalComponent baz={10} />;
+// $FlowExpectError
+<InjectedFooFunctionFactoryFunctionalComponent foo="asdf" bar={3} baz={10} />;
+
+
+const InjectedFooFunctionHocFunctional = injectFooHocFunctionalComponent()(TestFunctionalComponent);
+<InjectedFooFunctionHocFunctional baz={10} />;
+// $FlowExpectError
+<InjectedFooFunctionHocFunctional foo="asdf" bar={3} baz={10} />;
+
+
+const InjectedFooFunctionFactoryClassComponent = injectFooFactoryClassComponent(TestFunctionalComponent);
+<InjectedFooFunctionFactoryClassComponent baz={10} />;
+// $FlowExpectError
+<InjectedFooFunctionFactoryClassComponent foo="asdf" bar={3} baz={10} />;
+
+
+const InjectedFooFunctionHocClassComponent = injectFooHocClassComponent({foo: 'bar'})(TestFunctionalComponent);
+<InjectedFooFunctionHocClassComponent baz={10} />;
+// $FlowExpectError
+<InjectedFooFunctionHocClassComponent foo="asdf" bar={3} baz={10} />;
