@@ -4,11 +4,15 @@ import type {
   HigherOrderComponent,
 } from '../../index';
 
+type Options = {
+  foo: 'bar'
+}
+
 type RequiredProps = {};
 
 type ProvidedProps = {foo: number};
 
-const injectFooViaClassComponent: HigherOrderComponent<RequiredProps, ProvidedProps> = (C: any): any => {
+const injectFooHocClassComponent = (options: Options): HigherOrderComponent<RequiredProps, ProvidedProps> => (C: any): any => {
   class FooInjector extends React.Component<RequiredProps> {
     render() {
       return <C {...this.props} foo={3} />;
@@ -18,4 +22,4 @@ const injectFooViaClassComponent: HigherOrderComponent<RequiredProps, ProvidedPr
   return FooInjector
 };
 
-export default injectFooViaClassComponent;
+export default injectFooHocClassComponent;

@@ -7,7 +7,7 @@ export type Props = {
   baz: number,
 };
 
-class TestComponent extends React.Component<Props, void> {
+class TestClassComponent extends React.Component<Props, void> {
   static defaultProps = {
     foo: 3,
     bar: 3,
@@ -15,4 +15,4 @@ class TestComponent extends React.Component<Props, void> {
   render = () => null;
 };
 
-export default TestComponent;
+export default TestClassComponent;

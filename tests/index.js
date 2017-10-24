@@ -7,12 +7,11 @@ import type {
 import InvalidFunctionalComponent from './fixtures/InvalidFunctionalComponent';
 import ValidClassComponent from './fixtures/ValidClassComponent';
 import ValidFunctionalComponent from './fixtures/ValidFunctionalComponent';
-import TestComponent from './fixtures/TestComponent';
-import injectFooOriginal from './fixtures/injectFooOriginal';
-import injectFooOriginalPropsFixed from './fixtures/injectFooOriginalPropsFixed';
-import injectFooReadme from './fixtures/injectFooReadme';
-import injectFooViaClassComponent from './fixtures/injectFooViaClassComponent';
-import injectFooViaClassComponentWithOptions from './fixtures/injectFooViaClassComponentWithOptions';
+import TestClassComponent from './fixtures/TestClassComponent';
+import injectFooFactoryFunctionalComponent from './fixtures/injectFooFactoryFunctionalComponent';
+import injectFooHocFunctionalComponent from './fixtures/injectFooHocFunctionalComponent';
+import injectFooFactoryClassComponent from './fixtures/injectFooFactoryClassComponent';
+import injectFooHocClassComponent from './fixtures/injectFooHocClassComponent';
 
 // tests for ClassComponentWithDefaultProps
 (function(){
@@ -129,32 +128,26 @@ import injectFooViaClassComponentWithOptions from './fixtures/injectFooViaClassC
 })();
 
 
-const InjectedOriginal = injectFooOriginal(TestComponent);
-<InjectedOriginal baz={10} />;
+const InjectedFooFactoryFunctionalComponent = injectFooFactoryFunctionalComponent(TestClassComponent);
+<InjectedFooFactoryFunctionalComponent baz={10} />;
 // $FlowExpectError
-<InjectedOriginal foo="asdf" bar={3} baz={10} />;
+<InjectedFooFactoryFunctionalComponent foo="asdf" bar={3} baz={10} />;
 
 
-const InjectedOriginalPropsFixed = injectFooOriginalPropsFixed(TestComponent);
-<InjectedOriginalPropsFixed baz={10} />;
+const InjectedFooHocFunctional = injectFooHocFunctionalComponent()(TestClassComponent);
+<InjectedFooHocFunctional baz={10} />;
 // $FlowExpectError
-<InjectedOriginalPropsFixed foo="asdf" bar={3} baz={10} />;
+<InjectedFooHocFunctional foo="asdf" bar={3} baz={10} />;
 
 
-const InjectedReadme = injectFooReadme()(TestComponent);
-<InjectedReadme baz={10} />;
+const InjectedFooFactoryClassComponent = injectFooFactoryClassComponent(TestClassComponent);
+<InjectedFooFactoryClassComponent baz={10} />;
 // $FlowExpectError
-<InjectedReadme foo="asdf" bar={3} baz={10} />;
+<InjectedFooFactoryClassComponent foo="asdf" bar={3} baz={10} />;
 
 
-const InjectedViaClassComponent = injectFooViaClassComponent(TestComponent);
-<InjectedViaClassComponent baz={10} />;
+const InjectedFooHocClassComponent = injectFooHocClassComponent({foo: 'bar'})(TestClassComponent);
+<InjectedFooHocClassComponent baz={10} />;
 // $FlowExpectError
-<InjectedViaClassComponent foo="asdf" bar={3} baz={10} />;
-
-
-const InjectedViaClassComponentWithOptions = injectFooViaClassComponentWithOptions({foo: 'bar'})(TestComponent);
-<InjectedViaClassComponentWithOptions baz={10} />;
-// $FlowExpectError
-<InjectedViaClassComponentWithOptions foo="asdf" bar={3} baz={10} />;
+<InjectedFooHocClassComponent foo="asdf" bar={3} baz={10} />;
 
