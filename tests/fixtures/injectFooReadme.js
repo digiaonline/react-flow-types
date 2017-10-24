@@ -8,8 +8,8 @@ type RequiredProps = {};
 
 type ProvidedProps = {foo: number};
 
-const injectFoo = (): HigherOrderComponent<RequiredProps, ProvidedProps> => (C): any => {
+const injectFooReadme = (): HigherOrderComponent<RequiredProps, ProvidedProps> => (C): any => {
   return (props: RequiredProps) => <C {...props} foo={3} />;
 };
 
-export default injectFoo;
+export default injectFooReadme;

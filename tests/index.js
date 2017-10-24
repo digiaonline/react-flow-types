@@ -11,6 +11,7 @@ import TestComponent from './fixtures/TestComponent';
 import injectFooOriginal from './fixtures/injectFooOriginal';
 import injectFooOriginalPropsFixed from './fixtures/injectFooOriginalPropsFixed';
 import injectFooReadme from './fixtures/injectFooReadme';
+import injectFooViaClassComponent from './fixtures/injectFooViaClassComponent';
 
 // tests for ClassComponentWithDefaultProps
 (function(){
@@ -143,3 +144,10 @@ const InjectedReadme = injectFooReadme(TestComponent);
 <InjectedReadme baz={10} />;
 // $FlowExpectError
 <InjectedReadme foo="asdf" bar={3} baz={10} />;
+
+
+const InjectedViaClassComponent = injectFooViaClassComponent(TestComponent);
+<InjectedViaClassComponent baz={10} />;
+// $FlowExpectError
+<InjectedViaClassComponent foo="asdf" bar={3} baz={10} />;
+
