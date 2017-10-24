@@ -140,7 +140,7 @@ const InjectedOriginalPropsFixed = injectFooOriginalPropsFixed(TestComponent);
 <InjectedOriginalPropsFixed foo="asdf" bar={3} baz={10} />;
 
 
-const InjectedReadme = injectFooReadme(TestComponent);
+const InjectedReadme = injectFooReadme()(TestComponent);
 <InjectedReadme baz={10} />;
 // $FlowExpectError
 <InjectedReadme foo="asdf" bar={3} baz={10} />;
