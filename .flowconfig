@@ -1,7 +1,11 @@
 [ignore]
 .*/node_modules/
 
+[lints]
+all=error
+
 [options]
+include_warnings=true
 suppress_comment=\\(.\\|\n\\)*\\$FlowExpectError
-;suppress_comment=\\(.\\|\n\\)*\\$FlowExpectErrorTestClassComponent
-;suppress_comment=\\(.\\|\n\\)*\\$FlowExpectErrorTestFunctionalComponent
+suppress_comment=\\(.\\|\n\\)*\\$FlowExpectErrorTestClassComponent
+suppress_comment=\\(.\\|\n\\)*\\$FlowExpectErrorTestFunctionalComponent
