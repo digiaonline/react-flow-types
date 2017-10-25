@@ -4,21 +4,16 @@ import type {
   HigherOrderComponent,
   ClassComponentWithDefaultProps,
 } from '../index';
+import InvalidFunctionalComponent from './fixtures/InvalidFunctionalComponent';
+import ValidClassComponent from './fixtures/ValidClassComponent';
+import ValidFunctionalComponent from './fixtures/ValidFunctionalComponent';
+import TestClassComponent from './fixtures/TestClassComponent';
+import TestFunctionalComponent from './fixtures/TestFunctionalComponent';
+import injectFooFactoryFunctionalComponent from './fixtures/injectFooFactoryFunctionalComponent';
+import injectFooHocFunctionalComponent from './fixtures/injectFooHocFunctionalComponent';
+import injectFooFactoryClassComponent from './fixtures/injectFooFactoryClassComponent';
+import injectFooHocClassComponent from './fixtures/injectFooHocClassComponent';
 
-// This is a valid functional react component that we'll use to test our HigherOrderComponents later
-const ValidFunctionalComponent = (props: {string1: string, number1: number}) => <div />;
-
-// This is an invalid functional component. HigherOrderComponents shouldn't accept this as input
-const InvalidFunctionalComponent = (props: {string1: string, number1: number}) => 'hi';
-
-// This is a valid class-based component. We'll use it to test HigherOrderComponents later
-class ValidClassComponent extends React.Component<{string1: string, number1: number}, void> {
-  static defaultProps = {number1: 10}
-
-  render() {
-    return <div />;
-  }
-};
 
 // tests for ClassComponentWithDefaultProps
 (function(){
@@ -132,29 +127,60 @@ class ValidClassComponent extends React.Component<{string1: string, number1: num
       // $FlowExpectError
       <ComposedComponent2 number1={1} number2={1} />;
   })();
+
+
+  (function(){
+    // -----------------------------------
+    // target: TestClassComponent
+    const InjectedFooClassFactoryFunctionalComponent = injectFooFactoryFunctionalComponent(TestClassComponent);
+    <InjectedFooClassFactoryFunctionalComponent baz={10} />;
+    // $FlowExpectErrorTestClassComponent
+    <InjectedFooClassFactoryFunctionalComponent foo="asdf" bar={3} baz={10} />;
+
+
+    const InjectedFooClassHocFunctional = injectFooHocFunctionalComponent()(TestClassComponent);
+    <InjectedFooClassHocFunctional baz={10} />;
+    // $FlowExpectErrorTestClassComponent
+    <InjectedFooClassHocFunctional foo="asdf" bar={3} baz={10} />;
+
+
+    const InjectedFooClassFactoryClassComponent = injectFooFactoryClassComponent(TestClassComponent);
+    <InjectedFooClassFactoryClassComponent baz={10} />;
+    // $FlowExpectErrorTestClassComponent
+    <InjectedFooClassFactoryClassComponent foo="asdf" bar={3} baz={10} />;
+
+
+    const InjectedFooClassHocClassComponent = injectFooHocClassComponent({foo: 'bar'})(TestClassComponent);
+    <InjectedFooClassHocClassComponent baz={10} />;
+    // $FlowExpectErrorTestClassComponent
+    <InjectedFooClassHocClassComponent foo="asdf" bar={3} baz={10} />;
+  })();
+
+
+  (function(){
+    // -----------------------------------
+    // target: TestFunctionalComponent
+    const InjectedFooFunctionFactoryFunctionalComponent = injectFooFactoryFunctionalComponent(TestFunctionalComponent);
+    <InjectedFooFunctionFactoryFunctionalComponent baz={10} />;
+    // $FlowExpectErrorTestFunctionalComponent
+    <InjectedFooFunctionFactoryFunctionalComponent foo="asdf" bar={3} baz={10} />;
+
+
+    const InjectedFooFunctionHocFunctional = injectFooHocFunctionalComponent()(TestFunctionalComponent);
+    <InjectedFooFunctionHocFunctional baz={10} />;
+    // $FlowExpectErrorTestFunctionalComponent
+    <InjectedFooFunctionHocFunctional foo="asdf" bar={3} baz={10} />;
+
+
+    const InjectedFooFunctionFactoryClassComponent = injectFooFactoryClassComponent(TestFunctionalComponent);
+    <InjectedFooFunctionFactoryClassComponent baz={10} />;
+    // $FlowExpectErrorTestFunctionalComponent
+    <InjectedFooFunctionFactoryClassComponent foo="asdf" bar={3} baz={10} />;
+
+
+    const InjectedFooFunctionHocClassComponent = injectFooHocClassComponent({foo: 'bar'})(TestFunctionalComponent);
+    <InjectedFooFunctionHocClassComponent baz={10} />;
+    // $FlowExpectErrorTestFunctionalComponent
+    <InjectedFooFunctionHocClassComponent foo="asdf" bar={3} baz={10} />;
+  })();
 })();
-
-
-type Props = {
-  foo: number,
-  bar: number,
-  baz: number,
-};
-
-class TestComponent extends React.Component<Props, void> {
-  static defaultProps = {
-    foo: 3,
-    bar: 3,
-  };
-  render = () => null;
-};
-
-const injectFoo: HigherOrderComponent<{}, {foo: number}> = (C: any): any => {
-  return (props: Props) => <C {...props} foo={3} />;
-};
-const Injected = injectFoo(TestComponent);
-
-<Injected baz={10} />;
-
-// $FlowExpectError
-<Injected foo="asdf" bar={3} baz={10} />;
