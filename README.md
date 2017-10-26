@@ -1,5 +1,6 @@
 # react-flow-types
 
+[![Build Status](https://travis-ci.org/digiaonline/react-flow-types.svg?branch=develop)](https://travis-ci.org/digiaonline/react-flow-types)
 [![npm downloads](https://img.shields.io/npm/dt/react-flow-types.svg)](https://www.npmjs.com/package/react-flow-types)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/nordsoftware/react-flow-types/master/LICENSE)
 [![Gitter](https://img.shields.io/gitter/room/norsoftware/open-source.svg?maxAge=2592000)](https://gitter.im/nordsoftware/open-source)
