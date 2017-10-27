@@ -10,6 +10,7 @@ export type ClassComponentWithDefaultProps<DefaultProps, Props, State> =
 export type ComponentWithDefaultProps<DefaultProps, Props> =
   React.ComponentType<Props> & {defaultProps: DefaultProps};
 
+
 /**
  * Here is a generic type for HOCs:
  *
@@ -18,7 +19,21 @@ export type ComponentWithDefaultProps<DefaultProps, Props> =
  * RequiredProps: The final wrapped component will need RequiredProps, in addition to its own props
  * ProvidedProps: The final wrapped component will not need ProvidedProps, because the HOC will provide them to the inner component
  */
+
+type MakeOptional = <T>(v: T) => T | void | null;
+
 export type HigherOrderComponent<RequiredProps, ProvidedProps> =
-  & (<OriginalProps, DefaultProps>(component: ComponentWithDefaultProps<DefaultProps, OriginalProps>) =>
-      React.ComponentType<RequiredProps & $Diff<OriginalProps, ProvidedProps & DefaultProps>>)
-  & (<OriginalProps>(component: React.ComponentType<OriginalProps>) => React.ComponentType<RequiredProps & $Diff<OriginalProps, ProvidedProps>>);
+  & (
+    <Props, DefaultProps>(component: ComponentWithDefaultProps<DefaultProps, ProvidedProps & Props>) =>
+      React.ComponentType<
+        // Merge in RequiredProps
+        & RequiredProps
+        // Props, with diffed-out default props. Make sure to merge with ProvidedProps to work with
+        // $Diff constraints in nested HoCs.
+        & $Diff<ProvidedProps & Props, DefaultProps & ProvidedProps>
+        // Force props to be in the shape of all potential props (effectively allows properly-typed
+        // overrides of DefaultProps)
+        & $Shape<RequiredProps & DefaultProps & Props>
+      >
+    )
+  & (<Props>(component: React.ComponentType<ProvidedProps & Props>) => React.ComponentType<RequiredProps & Props>)

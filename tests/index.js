@@ -90,8 +90,6 @@ import injectFooHocClassComponent from './fixtures/injectFooHocClassComponent';
     <ComposedComponent number2={1} number3={1} />;
 
     // $FlowExpectError
-    <ComposedComponent number2={1} number3={1} number1="hi" />;
-    // $FlowExpectError
     <ComposedComponent number1={1} number3={1} />;
     // $FlowExpectError
     <ComposedComponent number1={1} number2={1} />;

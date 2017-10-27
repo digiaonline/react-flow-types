@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import type { ComponentWithDefaultProps } from '../../index';
 
 export type Props = {
   foo: number,
@@ -14,4 +15,4 @@ TestFunctionalComponent.defaultProps = {
   bar: 3,
 };
 
-export default TestFunctionalComponent;
+export default (TestFunctionalComponent: ComponentWithDefaultProps<{foo: number, bar: number}, Props>);
