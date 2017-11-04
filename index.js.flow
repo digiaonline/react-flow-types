@@ -33,4 +33,6 @@ export type HigherOrderComponent<RequiredProps, ProvidedProps> =
         & $Shape<RequiredProps & DefaultProps & Props>
       >
     )
+  & (<Props>(component: React.StatelessFunctionalComponent<ProvidedProps & Props>) => React.ComponentType<RequiredProps & Props>)
   & (<Props>(component: React.ComponentType<ProvidedProps & Props>) => React.ComponentType<RequiredProps & Props>)
+  & (<Props>(component: React.ComponentType<Object>) => React.ComponentType<Object>)
