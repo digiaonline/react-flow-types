@@ -1,6 +1,6 @@
 {
   "name": "react-flow-types",
-  "version": "0.2.0-beta.4",
+  "version": "0.2.0-beta.5",
   "description": "A small collection of flow type definitions for working with React components",
   "main": "index.js",
   "scripts": {
