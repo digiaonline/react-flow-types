@@ -181,4 +181,11 @@ import injectFooHocClassComponent from './fixtures/injectFooHocClassComponent';
     // $FlowExpectErrorTestFunctionalComponent
     <InjectedFooFunctionHocClassComponent foo="asdf" bar={3} baz={10} />;
   })();
+
+  (function(){
+    // Ensure components have injected props defined.
+    declare var provideString2: HigherOrderComponent<{}, {string2: string}>;
+    // $FlowExpectError
+    const ProvideString1OfValidClassComponent = provideString2(ValidClassComponent);
+  })();
 })();
